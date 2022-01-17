@@ -90,33 +90,31 @@ Implémenter les classes répondant aux spécifications suivantes:
 
 | Méthode | Description |
 |---|---|
-| _**List<Item>** getItems()_ | Renvoie la liste de tous les éléments interactifs présents dans ce lieu. |
+| _**List\<Item\>** getItems()_ | Renvoie la liste de tous les éléments interactifs présents dans ce lieu. |
 | _**void** addItem(Item item)_ | Ajoute un élément interactif à la liste des éléments interactifs présents dans ce lieu. |
 
 **Attention**: il convient de s'assurer que la valeur de retour de la méthode `Room.getItems()` soit synchronisée avec la valeur de retour de la méthode `Item.getRoom()`. Par exemple, si la méthode `getItems()` de la chambre renvoie le lit et les rideaux, il faut s'assurer que la méthode `getRoom()` du lit et des rideaux renvoie bien la chambre.
 
 ## Mission 2: naviguer entre les lieux
 
-Avant toute chose, il faut que le jeu décrive au joueur où il se trouve, et qu'il puisse se déplacer d'un endroit à l'autre. Le déroulement du jeu pourrait ressembler à l'exemple suivant:
+Maintenant que nous sommes capables d'obtenir la description de chaque lieu en écrivant son nom, nous allons pouvoir proposer au joueur d'incarner un personnage qui se trouve dans un lieu donné, et qui est capable de se déplacer de l'un à l'autre. Le déroulement du jeu pourrait ressembler à l'exemple suivant:
 
 <details>
 <summary>Exemple</summary>
 
-> You are in the bedroom. West is the bathroom, north is the corridor.
+> This is where you usually sleep. It's quite small, but at least the bed is comfy. **Available items**: bed, curtain. **Available directions**: west, north.
 
 `west`
 
-> You are in the bathroom. East is the bedroom.
+> This is the bathroom. There's no windows in there, so it tends to get easily dank. **Available items**: shower, toothbrush. **Available directions**: east.
 
 `west`
 
 > You cannot go into that direction!
 
-> You are in the bathroom. East is the bedroom.
-
 `east`
 
-> You are in the bedroom. West is the bathroom, north is the corridor.
+> This is where you usually sleep. It's quite small, but at least the bed is comfy. **Available items**: bed, curtain. **Available directions**: west, north.
 
 </details>
 
@@ -128,7 +126,6 @@ Afin d'obtenir ce résultat, implémenter les classes ci-après en suivant les s
 
 | Méthode | Description |
 |---|---|
-| _**String** getName()_ | Renvoie le nom du lieu (exemple: `"bedroom"`) |
 | _**Room** getRoomInDirection(**Direction** direction)_ | Renvoie le lieu où l'on arrive lorsque l'on part de ce lieu et qu'on emprunte la direction passée en paramètre (exemple: depuis la chambre à coucher, en passant la direction ouest, on devrait obtenir la salle de bain) |
 
 ### `Direction`
@@ -160,22 +157,14 @@ Afin d'obtenir ce résultat, implémenter les classes ci-après en suivant les s
 | _**boolean** isRunning()_ | Permet de savoir si la partie est en cours (`true`) ou si elle est terminée (`false`) |
 | _**Room** getCurrentRoom()_ | Renvoie le lieu dans lequel le joueur se trouve actuellement |
 
-### `App`
+## Mission 3: interagir avec les éléments
 
-- Point d'entrée de l'application.
-
-| Méthode | Description |
-|---|---|
-| _**static void** main(**String** args)_ | Processus principal. Crée une nouvelle partie et l'initialise, puis lui demande de réaliser un cycle d'exécution tant qu'elle est en cours. |
-
-## Mission 2: objets et interactions
-
-Maintenant que nos joueurs sont capables de se déplacer d'un lieu à une autre, il faudrait ajouter des éléments (objets, personnages, monstres…) avec lesquels ils pourront interagir.
+Maintenant que nos joueurs sont capables de se déplacer d'un lieu à une autre et de voir les éléments qui s'y trouvent, il faudrait qu'ils soient puissent interagir avec en utilisant des commandes.
 
 <details>
 <summary>Exemple</summary>
 
-> You are in the bedroom. West is the bathroom, north is the corridor. There is a bed and a mirror.
+> This is where you usually sleep. It's quite small, but at least the bed is comfy. **Available items**: bed, curtain. **Available directions**: west, north.
 
 `use bed`
 
@@ -199,20 +188,13 @@ Maintenant que nos joueurs sont capables de se déplacer d'un lieu à une autre,
 
 </details>
 
-### 1. Intégrer des objets à l'univers
-
-- Écrire une classe `Item`, qui représente les éléments interactifs de l'univers.
-- Chaque élément doit avoir un nom.
-- Chaqué élément doit être visible ou non (c'est-à-dire que le joueur voit son nom affiché dans le jeu, et peut interagir avec, ou non).
-- Chaque pièce peut contenir une quantité indéterminée d'éléments. La liste des éléments visibles doit être affichée automatiquement dans chaque pièce.
-
-### 2. Interagir avec des éléments
+### 1. Interagir avec des éléments
 
 - Écrire une classe `Command` qui représente une commande que l'utilisateur peut entrer dans la console.
 - Chaque commande doit avoir un texte par défaut qui s'affichera si jamais l'utilisateur tente de l'utiliser avec un élément qui n'a pas été prévu pour (exemple: `talk to mirror`).
-- Chaque élément peut réagir à un nombre indéterminé de commandes. Dans un premier temps, utiliser une commande particulière avec un élément particulier doit produire l'affichage d'un texte particulier.
+- Chaque élément peut réagir à un nombre indéterminé de commandes. Dans un premier temps, utiliser une commande particulière avec un élément particulier doit produire l'affichage d'un texte particulier (exemple: `use bed` doit produire l'affichage du texte `You take a quick nap. You feel refreshed!`).
 
-### 3. Programmer des interactions complexes
+### 2. Programmer des interactions complexes
 
 Utiliser une commande sur un élément doit pouvoir produire une variété d'effets, dont afficher un texte n'est qu'un exemple.
 
@@ -237,9 +219,9 @@ Implémenter une ou plusieurs des classes suivantes:
 - Ramasser une brosse à dents dans la salle de bain (`pick up toothbrush`) doit provoquer son ajout à l'inventaire et sa disparition de la pièce.
 - Toucher une prise électrique (`touch plug`) doit produire la mort du héros, et donc la fin de la partie.
 
-Si le bonus de l'étape 3 a été réalisé, chaque interaction doit être accompagnée d'au moins un message décrivant l'effet obtenu.
+Si le bonus de l'étape 2 a été réalisé, chaque interaction doit être accompagnée d'au moins un message décrivant l'effet obtenu.
 
-## Mission 3: Harmoniser les commandes
+## Mission 4: harmoniser les commandes
 
 Le processus principal qui permet de faire fonctionner le jeu est désormais capable de reconnaître les saisies utilisateur qui correspondent à une direction (`east`, `south`, `west`…) ainsi que celles qui correspondent à une interaction avec un objet (`use bed`, `open drawer`, `pick up notepad`…). À ce stade, nous aimerions ajouter des commandes générales comme `help` qui pourrait afficher la liste des commandes possibles, ou encore `exit` qui permettrait d'interrompre le jeu. Cependant, nous commençons à entrevoir que le fait de rajouter des nouvelles commandes de la sorte risque de complexifier le processus principal du jeu, qui est déjà bien chargé: car si nous continuons sur notre lancée, chaque nouveau type de commandes va devoir être traité séparément des autres.
 
