@@ -194,6 +194,13 @@ Maintenant que nos joueurs sont capables de se déplacer d'un lieu à une autre 
 - Chaque commande doit avoir un texte par défaut qui s'affichera si jamais l'utilisateur tente de l'utiliser avec un élément qui n'a pas été prévu pour (exemple: `talk to mirror`).
 - Chaque élément peut réagir à un nombre indéterminé de commandes. Dans un premier temps, utiliser une commande particulière avec un élément particulier doit produire l'affichage d'un texte particulier (exemple: `use bed` doit produire l'affichage du texte `You take a quick nap. You feel refreshed!`).
 
+<details>
+<summary>[INDICE] Ça peut être utile</summary>
+
+[Documentation Java: HashMap](https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html)
+
+</details>
+
 ### 2. Programmer des interactions complexes
 
 Utiliser une commande sur un élément doit pouvoir produire une variété d'effets, dont afficher un texte n'est qu'un exemple.
